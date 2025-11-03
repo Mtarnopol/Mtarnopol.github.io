@@ -1,54 +1,84 @@
-// API endpoint for the NWS forecast 
-const url = 'https://api.weather.gov/gridpoints/GRR/82,39/forecast';
+// Weather API endpoints (GRR = Grand Rapids, MI)
+const url = "https://api.weather.gov/gridpoints/GRR/82,39/";
+const forecast = "https://api.weather.gov/gridpoints/GRR/82,39/forecast";
+const hourly = "https://api.weather.gov/gridpoints/GRR/82,39/forecast/hourly";
 
-// Select the HTML container to display results
+// the html container
 const container = document.querySelector(".container");
 
-// Run everything immediately
+// immediately call the main function
 doTheWholeThing();
 
 async function doTheWholeThing() {
-	try {
-		// Get weather data
-		const data = await getData();
-		console.log("Raw Data:", data);
+  try {
+    const data = await getData();
+    console.log("Fetched data:", data);
 
-		// Process forecast data into HTML
-		const result = processData(data.properties.periods);
+    // Get the current (first) forecast period
+    const currentWeather = data.properties?.periods?.[0];
+    console.log("Current weather:", currentWeather);
 
-		// Show the forecast in the container
-		container.innerHTML = result;
+    // Display it
+    const result = processData(currentWeather);
+    container.innerHTML = result;
 
-	} catch (error) {
-		console.error("Error:", error);
-		container.innerHTML = `<p class="error">Failed to load weather data. Please try again later.</p>`;
-	}
+    // Change CSS based on conditions
+    applyWeatherTheme(currentWeather.shortForecast);
+
+  } catch (err) {
+    console.error("Error:", err);
+    container.innerHTML = `<p>Failed to load weather data. Please try again later.</p>`;
+  }
 }
 
-// Fetch data from the API
+// fetch data
 async function getData() {
-	const response = await fetch(url);
+  const response = await fetch(forecast, {
+    headers: { "Accept": "application/geo+json" }
+  });
 
-	if (!response.ok) {
-		throw new Error(`An error occurred: ${response.status}`);
-	}
+  if (!response.ok) {
+    throw new Error(`An error has occurred: ${response.status}`);
+  }
 
-	const json = await response.json();
-	return json;
+  const json = await response.json();
+  return json;
 }
 
-// Turn the data into HTML elements
-function processData(periods) {
-	const formattedData = periods.map(period => {
-		return (`
-			<div class="forecast-item">
-				<h2>${period.name}</h2>
-				<p><strong>Temperature:</strong> ${period.temperature}°${period.temperatureUnit}</p>
-				<p><strong>Wind:</strong> ${period.windSpeed} ${period.windDirection}</p>
-				<p><strong>Forecast:</strong> ${period.shortForecast}</p>
-			</div>
-		`);
-	}).join("");
+// create HTML for the current forecast
+function processData(period) {
+  if (!period) return "<p>No current weather data available.</p>";
 
-	return formattedData;
+  return `
+    <div class="current-weather">
+      <h2>Current Weather</h2>
+      <p><strong>${period.name}</strong>: ${period.shortForecast}</p>
+      <p>Temperature: ${period.temperature}°${period.temperatureUnit}</p>
+      <p>Wind: ${period.windSpeed} ${period.windDirection}</p>
+    </div>
+  `;
 }
+
+// dynamically change background or CSS based on weather
+function applyWeatherTheme(condition) {
+  condition = condition.toLowerCase();
+  const body = document.body;
+
+  body.className = ""; // clear previous classes
+
+  if (condition.includes("sunny") || condition.includes("clear")) {
+    body.classList.add("sunny");
+  } else if (condition.includes("rain") || condition.includes("showers")) {
+    body.classList.add("rainy");
+  } else if (condition.includes("cloud")) {
+    body.classList.add("cloudy");
+  } else if (condition.includes("snow")) {
+    body.classList.add("snowy");
+  } else if (condition.includes("fog") || condition.includes("mist")) {
+    body.classList.add("foggy");
+  } else {
+    body.classList.add("default-weather");
+  }
+}
+
+
