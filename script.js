@@ -1,4 +1,4 @@
-// API endpoint for the NWS forecast
+// API endpoint for the NWS forecast 
 const url = 'https://api.weather.gov/gridpoints/GRR/82,39/forecast';
 
 // Select the HTML container to display results
