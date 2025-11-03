@@ -1,2 +1,2 @@
 # Mtarnopol.github.io
-Github Home Example
+GitHub Weather Example
