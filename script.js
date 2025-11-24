@@ -49,6 +49,7 @@ function renderExpenses() {
     filtered.forEach((exp, index) => {
         total += exp.amount;
 
+        //This creates a list item for each expense with the expense, adds a delete button, and then displays it in your expense list.
         const li = document.createElement("li");
         li.classList.add("expense-item");
         li.innerHTML = `
