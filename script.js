@@ -67,8 +67,3 @@ function renderExpenses() {
 
 // Initial render or displays content
 renderExpenses();
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 93f24df943feb1d8712ecde6db740b3b6f25746d
