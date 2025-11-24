@@ -1,4 +1,4 @@
-// Loads previous expenses from localStorage or create empty array, data source
+// Loads previous expenses: my API or Local data stored in JavaScript
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
 // User Interaction, adding expense button changes the UI
