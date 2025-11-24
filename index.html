@@ -1,32 +1,49 @@
-<!DOCTYPE html> 
-
-<html lang="en-US">
-
-
-	<head>
-
-		<title>Weather Forcast</title>
-
-        <link rel="stylesheet" href="style.css">
-
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="icon" href="favicon.ico">
-
-	</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpartaSpend</title>
+  <link rel="icon" type="image/jpg" href="images/sparty-head-logo.jpg">
+  <link rel="stylesheet" href="stylesheet.css" />
+</head>
+<body>
 
 
-	<body>
 
-		<h1>JavaScript Remote Data</h1>
+  <img src="images/sparty-head-logo.jpg" alt="Logo" style="height:80px; vertical-align:middle; margin-right:10px;">
+  <h1 class= "title-3d">SpartaSpend</h1>
+  <div class="expenses-container">
+    <input id="expenseName" type="text" placeholder="Expense name" />
+    <input id="expenseAmount" type="number" placeholder="Amount ($)" />
+    <select id="expenseCategory">
+      <option value="Select Category">Select Category</option>
+      <option value="Books">Books</option>
+      <option value="Food">Food</option>
+      <option value="Transport">Transport</option>
+      <option value="Other">Other</option>
+    </select>
+    <input id="expenseDate" type="date" />
+    <button id="addExpense">Add Expense</button>
+  </div>
 
-		<p>The weather for the week in Michigan!</p>
+  <h2>Filters</h2>
+  <div class="filter-container">
+    <select id="filterCategory">
+      <option value="All">All Categories</option>
+      <option value="Books">Books</option>
+      <option value="Food">Food</option>
+      <option value="Transport">Transport</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
 
-		<div class="container"></div>
 
-		<script src="script.js"></script>
+  <h2>Total Spent: $<span id="totalAmount">0</span></h2>
 
-	</body>
+<h4>Expense List</h4>
+  <ul id="expenseList"></ul>
 
-
+  <script src="script.js"></script>
+</body>
 </html>
